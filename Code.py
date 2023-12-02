@@ -7,14 +7,12 @@ time_delay = 15
 clock = time.Clock()
 
 class GameSprite(sprite.Sprite):
-    def __init__(self,player_image, player_x, player_y, width,height,min_x):
+    def __init__(self,player_image, player_x, player_y, width,height,player_speed):
         super().__init__()
         self.width = width
         self.height = height
         self.image = transform.scale(image.load(player_image),(width,height))
         self.speed = player_speed
-        self.min_x = min_x
-        self.max_x = max_x
         self.rect = self.image.get_rect()
         self.rect.x = player_x
         self.rect.y = player_y
@@ -38,6 +36,7 @@ class Player(GameSprite):
 
 window = display.set_mode((win_width,win_height))
 background = transform.scale(image.load("Black.jpg"),(win_width,win_height))
+player = Player("White.jng",100,win_height/2,50,100,20)
 
 
 while game:
@@ -48,6 +47,8 @@ while game:
             game = False
 
     window.blit(background,(0,0))
+    player.update()
+    player.reset()
 
     display.update()
     time.delay(time_delay)

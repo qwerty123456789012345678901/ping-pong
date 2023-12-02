@@ -66,8 +66,8 @@ class Ball(GameSprite):
 
 window = display.set_mode((win_width,win_height))
 background = transform.scale(image.load("Black.jpg"),(win_width,win_height))
-player1 = Player("White.jpg",100,win_height/2,50,100,20,20,1)
-player2 = Player("White.jpg",win_width-100,win_height/2,50,100,20,20,2)
+player1 = Player("White.jpg",25,win_height/2,15,100,20,20,1)
+player2 = Player("White.jpg",win_width-40,win_height/2,15,100,20,20,2)
 ball = Ball("White.jpg",win_width/2,win_height/2,25,25,5,5)
 
 

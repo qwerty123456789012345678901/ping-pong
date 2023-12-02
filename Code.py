@@ -7,12 +7,13 @@ time_delay = 15
 clock = time.Clock()
 
 class GameSprite(sprite.Sprite):
-    def __init__(self,player_image, player_x, player_y, width,height,player_speed,player_type):
+    def __init__(self,player_image, player_x, player_y, width,height,player_x_speed,player_y_speed,player_type="None"):
         super().__init__()
         self.width = width
         self.height = height
         self.image = transform.scale(image.load(player_image),(width,height))
-        self.speed = player_speed
+        self.x_speed = player_x_speed
+        self.y_speed = player_y_speed
         self.rect = self.image.get_rect()
         self.rect.x = player_x
         self.rect.y = player_y
@@ -25,22 +26,39 @@ class Player(GameSprite):
         keys_pressed = key.get_pressed()
         if self.player_type == 1:
             if keys_pressed[K_w] and self.rect.x >0:
-                self.rect.y -= self.speed
+                self.rect.y -= self.y_speed
             if keys_pressed[K_s] and self.rect.y < win_height-50:
-                self.rect.y += self.speed
+                self.rect.y += self.y_speed
             if keys_pressed[K_a] and self.rect.x > 0:
-                self.rect.x -= self.speed
+                self.rect.x -= self.x_speed
             if keys_pressed[K_d] and self.rect.x < win_width-50:
-                self.rect.x += self.speed
+                self.rect.x += self.x_speed
         elif self.player_type == 2:
             if keys_pressed[K_UP] and self.rect.x >0:
-                self.rect.y -= self.speed
+                self.rect.y -= self.y_speed
             if keys_pressed[K_DOWN] and self.rect.y < win_height-50:
-                self.rect.y += self.speed
+                self.rect.y += self.y_speed
             if keys_pressed[K_LEFT] and self.rect.x > 0:
-                self.rect.x -= self.speed
+                self.rect.x -= self.x_speed
             if keys_pressed[K_RIGHT] and self.rect.x < win_width-50:
-                self.rect.x += self.speed
+                self.rect.x += self.x_speed
+
+class Ball(GameSprite):
+    def update(self):
+        if self.rect.x > 0 and self.rect.x < win_width:
+            self.rect.x += self.x_speed
+        else:
+            self.x_speed *= -1
+            self.rect.x += self.x_speed
+
+        if self.rect.y > 0 and self.rect.y < win_height:
+            self.rect.y += self.y_speed
+        else:
+            self.y_speed *= -1
+            self.rect.y += self.y_speed
+
+
+        self.rect.y += self.y_speed
             
 
 
@@ -48,8 +66,9 @@ class Player(GameSprite):
 
 window = display.set_mode((win_width,win_height))
 background = transform.scale(image.load("Black.jpg"),(win_width,win_height))
-player1 = Player("White.jng",100,win_height/2,50,100,20,1)
-player2 = Player("White.jng",win_width-100,win_height/2,50,100,20,2)
+player1 = Player("White.jpg",100,win_height/2,50,100,20,20,1)
+player2 = Player("White.jpg",win_width-100,win_height/2,50,100,20,20,2)
+ball = Ball("White.jpg",win_width/2,win_height/2,25,25,5,5)
 
 
 while game:
@@ -64,6 +83,8 @@ while game:
     player1.reset()
     player2.update()
     player2.reset()
+    ball.update()
+    ball.reset()
 
     display.update()
     time.delay(time_delay)

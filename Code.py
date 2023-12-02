@@ -83,8 +83,13 @@ while game:
     player1.reset()
     player2.update()
     player2.reset()
+
+    if sprite.collide_rect(ball,player1) or sprite.collide_rect(ball,player2):
+        ball.x_speed *= -1
     ball.update()
     ball.reset()
+
+    
 
     display.update()
     time.delay(time_delay)

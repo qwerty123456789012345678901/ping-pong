@@ -1,10 +1,11 @@
 from pygame import *
 
-win_width = 700
-win_height = 500
+win_width = 1300
+win_height = 700
 game = True
 time_delay = 15
 clock = time.Clock()
+scores = 0
 
 class GameSprite(sprite.Sprite):
     def __init__(self,player_image, player_x, player_y, width,height,player_x_speed,player_y_speed,player_type="None"):
@@ -45,13 +46,21 @@ class Player(GameSprite):
 
 class Ball(GameSprite):
     def update(self):
-        if self.rect.x > 0 and self.rect.x < win_width:
+        if self.rect.x > 0 and self.rect.x < win_width - self.width:
             self.rect.x += self.x_speed
-        else:
+        if self.rect.x <= 0:
             self.x_speed *= -1
             self.rect.x += self.x_speed
+            global scores 
+            scores -= 1
 
-        if self.rect.y > 0 and self.rect.y < win_height:
+        if self.rect.x >= win_width - self.width:
+            self.x_speed *= -1
+            self.rect.x += self.x_speed
+            scores += 1
+
+        if self.rect.y > 0 and self.rect.y < win_height - self.height:
+            
             self.rect.y += self.y_speed
         else:
             self.y_speed *= -1
@@ -88,7 +97,6 @@ while game:
         ball.x_speed *= -1
     ball.update()
     ball.reset()
-
     
 
     display.update()

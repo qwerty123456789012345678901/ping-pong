@@ -30,22 +30,22 @@ class Player(GameSprite):
     def update(self):
         keys_pressed = key.get_pressed()
         if self.player_type == 1:
-            if keys_pressed[K_w] and self.rect.x >0:
+            if keys_pressed[K_w] and self.rect.y > 0:
                 self.rect.y -= self.y_speed
-            if keys_pressed[K_s] and self.rect.y < win_height-50:
+            if keys_pressed[K_s] and self.rect.y < win_height-self.height:
                 self.rect.y += self.y_speed
-            if keys_pressed[K_a] and self.rect.x > 0:
+            if keys_pressed[K_a] and self.rect.x > self.width:
                 self.rect.x -= self.x_speed
-            if keys_pressed[K_d] and self.rect.x < win_width-50:
+            if keys_pressed[K_d] and self.rect.x < win_width - 2 * self.width:
                 self.rect.x += self.x_speed
         elif self.player_type == 2:
-            if keys_pressed[K_UP] and self.rect.x >0:
+            if keys_pressed[K_UP] and self.rect.y > 0:
                 self.rect.y -= self.y_speed
-            if keys_pressed[K_DOWN] and self.rect.y < win_height-50:
+            if keys_pressed[K_DOWN] and self.rect.y < win_height - self.height:
                 self.rect.y += self.y_speed
             if keys_pressed[K_LEFT] and self.rect.x > 0:
                 self.rect.x -= self.x_speed
-            if keys_pressed[K_RIGHT] and self.rect.x < win_width-50:
+            if keys_pressed[K_RIGHT] and self.rect.x < win_width - 2 * self.width:
                 self.rect.x += self.x_speed
 
 class Ball(GameSprite):
